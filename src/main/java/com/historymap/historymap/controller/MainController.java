@@ -13,7 +13,6 @@ public class MainController {
     @Value("${map.api.key}")
     String MAP_API_KEY;
 
-    // @RequestMapping("/index")
     @GetMapping("/index")
     public String index(Model model){
         model.addAttribute("MAP_API_KEY", MAP_API_KEY);
