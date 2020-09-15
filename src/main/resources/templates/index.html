@@ -119,6 +119,40 @@ var make = new kakao.maps.Marker({
     position: pos[0].latlng,
     title: pos[0].title
 })
+
+var getMakerData = function(){
+    const markers = [
+        {
+            "Lat" : 33.45139070336226,
+            "Lng" : 126.57464811209368,
+        },
+        {
+            "Lat" : 33.45078667722456,
+            "Lng" : 126.57466181625696,
+        },
+        {
+            "Lat" : 33.4502458727692,
+            "Lng" : 126.57470747773355,
+        },
+    ]
+
+    
+    for(var i in markers){
+        var data = {
+            title : "test",
+            latlng : new kakao.maps.LatLng(markers[i].Lat, markers[i].Lng)
+        };
+
+        var make = new kakao.maps.Marker({
+            map : map,
+            position : data.latlng,
+            title : data.title
+        });
+    }
+
+}
+
+getMakerData();
     
 </script>
 </body>

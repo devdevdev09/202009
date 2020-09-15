@@ -3,11 +3,15 @@
 ## History Map
 
 ## TODO
+- MYBATIS 연결하기(2020-09-17)
 - Kakao 지도 API 사용
 - 카카오 소셜 로그인(할까 말까??) > 안하면 1인용.
 - 여러곳에 마커 표시하기(https://apis.map.kakao.com/web/sample/multipleMarkerImage/)
 - 표시한 마커위치 저장하기
 - 일자별로 보기
+
+### 2020-09-15
+- 저장된 좌표로 마커 표시하기
 
 ### 2020-09-09
 - 클릭한 위치에 마커 표시하기
