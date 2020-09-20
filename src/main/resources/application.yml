@@ -1,0 +1,11 @@
+# Database # ORACLE
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
+    
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mybatis/**/*.xml

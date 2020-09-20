@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 @Controller
 public class MainController {
 
-    @GetMapping("/index")
-    public String index(Model model){
-        return "index";
-    }   
+    // @GetMapping("/index")
+    // public String index(Model model){
+    //     return "index";
+    // }   
 }
