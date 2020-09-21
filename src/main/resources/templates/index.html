@@ -10,11 +10,20 @@
     <p>
         <button onclick="hideMarkers()">마커 감추기</button>
         <button onclick="showMarkers()">마커 보이기</button>
+        <button onclick="saveMarkers()">마커 저장하기</button>
     </p> 
     <em>클릭한 위치에 마커가 표시됩니다!</em>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7cdcbc73cd760e413a2f952a867ec30d"></script>
-<script>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+    var list = /*[[${locationList}]]*/ 'default';
+/*]]>*/
+    console.log("location List");
+    console.log(list);
+
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 mapOption = { 
     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -68,88 +77,48 @@ function hideMarkers() {
     setMarkers(null);    
 }
 
-// test::마커 여러개 표시하기(미리 저장된 좌표값으로 표시하기)
-// var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-//     mapOption = { 
-//         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-//         level: 3 // 지도의 확대 레벨
-//     };
-
-// var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
- 
-// // 마커를 표시할 위치와 title 객체 배열입니다 
-// // test::좌표 위치만 받아와서 마커 그리기
-// var positions = [
-//     {
-//         title: '카카오', 
-//         latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-//     },
-// ];
-
-// // 마커 이미지의 이미지 주소입니다
-// var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-    
-// for (var i = 0; i < positions.length; i ++) {
-    
-//     // 마커 이미지의 이미지 크기 입니다
-//     var imageSize = new kakao.maps.Size(24, 35); 
-    
-//     // 마커 이미지를 생성합니다    
-//     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-    
-//     // 마커를 생성합니다
-//     var marker = new kakao.maps.Marker({
-//         map: map, // 마커를 표시할 지도
-//         position: positions[0].latlng, // 마커를 표시할 위치
-//         title : positions[0].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-//         // image : markerImage // 마커 이미지 없으면 기본 마커
-//     });
-// }
-
-// test::이렇게 불러오기
-var pos = [
-    {
-        title : 'heodae',
-        latlng : new kakao.maps.LatLng(33.45057196742882,126.56991972243732)
-    }
-]
-
-var make = new kakao.maps.Marker({
-    map:map,
-    position: pos[0].latlng,
-    title: pos[0].title
-})
-
-var getMakerData = function(){
-    const markers = [
-        {
-            "Lat" : 33.45139070336226,
-            "Lng" : 126.57464811209368,
-        },
-        {
-            "Lat" : 33.45078667722456,
-            "Lng" : 126.57466181625696,
-        },
-        {
-            "Lat" : 33.4502458727692,
-            "Lng" : 126.57470747773355,
-        },
-    ]
-
-    
-    for(var i in markers){
-        var data = {
-            title : "test",
-            latlng : new kakao.maps.LatLng(markers[i].Lat, markers[i].Lng)
-        };
-
-        var make = new kakao.maps.Marker({
-            map : map,
-            position : data.latlng,
-            title : data.title
-        });
+const saveMarkers = function() {
+    console.log("저장할 좌표 목록");
+    for(let i in markers){
+        console.log(markers[i].getPosition());
     }
 
+    let list = [];
+
+    for(let i in markers){
+        let pos = {
+            "latitude" : markers[i].getPosition().Ha,
+            "longitude" : markers[i].getPosition().Ga
+        }
+
+        list.push(pos);
+    }
+
+    $.ajax({
+        type : "post",
+        url : "/save",
+        dataType : "json",
+        contentType: 'application/json',
+        data : JSON.stringify(list),
+        success : function(data){
+            console.log("successs~~~~");
+            console.log(data);
+        },fail : function(data){
+            console.log("fail~~~");
+            console.log(data);
+        },complete : function(data){
+            console.log("complete~~~");
+            console.log(data);
+        }
+    })
+
+
+}
+
+const getMakerData = function() {
+    for(var i in list){
+        addMarker(new kakao.maps.LatLng(list[i].latitude, list[i].longitude));
+    }
 }
 
 getMakerData();

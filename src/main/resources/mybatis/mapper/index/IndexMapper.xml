@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.historymap.historymap.mapper.IndexMapper">
-	<select id="getIndex" resultType="hashMap">
-		SELECT * FROM TEST_DB
+	<select id="getIndex" parameterType="String" resultType="Location">
+		SELECT * FROM LOCATION WHERE USER_ID = #{USER_ID}
 	</select>
+
+	<insert id="insertList" parameterType="Position">
+		INSERT INTO LOCATION VALUES(0, #{LATITUDE}, #{LONGITUDE}, sysdate, #{USER_ID}, '0001')
+	</insert>
 </mapper>

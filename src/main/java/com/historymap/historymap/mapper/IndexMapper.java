@@ -1,7 +1,9 @@
 package com.historymap.historymap.mapper;
 
-import java.util.HashMap;
 import java.util.List;
+
+import com.historymap.historymap.vo.location.Location;
+import com.historymap.historymap.vo.position.Position;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -9,5 +11,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface IndexMapper {
-    List<HashMap<String, String>> getIndex();
+    List<Location> getIndex(String user_id);
+    int insertList(Position position, String user_id);
 }

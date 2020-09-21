@@ -10,7 +10,7 @@
     <setting name="mapUnderscoreToCamelCase" value="true" />
     <setting name="callSettersOnNulls" value="true" />
   </settings>
-  <!-- <typeAliases>
-    <package name="com.study.team.project.vo" />
-  </typeAliases> -->
+  <typeAliases>
+    <package name="com.historymap.historymap.vo" />
+  </typeAliases>
 </configuration>
