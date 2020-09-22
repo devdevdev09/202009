@@ -1,8 +1,10 @@
 package com.historymap.historymap.index;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.historymap.historymap.vo.location.Location;
 import com.historymap.historymap.vo.position.Position;
@@ -39,9 +41,19 @@ public class IndexController {
 
     @PostMapping("/save")
     @ResponseBody
-    public String listSave(@RequestBody List<Map<String, Object>> list){
+    public Map<String, Object> listSave(@RequestBody List<Location> list){
+        boolean result = false;
+        
         String user_id = "0001";
-        // int result = indexService.insertList(list, user_id);
-        return "index";
+        List<Location> saveList = list;
+
+        int insert = indexService.insertList(saveList, user_id);
+
+        result = (insert >0 ) ? true : false;
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("result", result);
+        
+        return resultMap;
     }
 }

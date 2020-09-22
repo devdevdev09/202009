@@ -1,6 +1,7 @@
 package com.historymap.historymap.index;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,15 +21,22 @@ public class IndexService {
         return indexMapper.getIndex(user_id);
 	}
 
-	public int insertList(List<Position> list, String user_id) {
+    @Transactional
+	public int insertList(List<Location> list, String user_id) {
         int result = 0;
 
         try{
-            for(Position position : list){
-                indexMapper.insertList(position, user_id);
+            for(Location location : list){
+                location.setUser_id(user_id);
+                result = indexMapper.insertList(location);
+                // System.out.println(location.getLatitude());
+                if(result <= 0){
+                    result = -1;
+                    break;
+                }
             }
-            result = 1;
         }catch(Exception e){
+            e.printStackTrace();
             result = -1;
         }
 

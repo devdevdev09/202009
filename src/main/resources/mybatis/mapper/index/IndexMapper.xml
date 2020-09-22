@@ -2,10 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.historymap.historymap.mapper.IndexMapper">
 	<select id="getIndex" parameterType="String" resultType="Location">
-		SELECT * FROM LOCATION WHERE USER_ID = #{USER_ID}
+		SELECT 
+			* 
+		FROM 
+			LOCATION 
+		WHERE 
+			USER_ID = #{USER_ID}
+		ORDER BY 
+			datetime DESC
 	</select>
 
-	<insert id="insertList" parameterType="Position">
-		INSERT INTO LOCATION VALUES(0, #{LATITUDE}, #{LONGITUDE}, sysdate, #{USER_ID}, '0001')
+	<insert id="insertList" parameterType="Location">
+		INSERT INTO LOCATION VALUES(
+			0
+			, #{latitude}
+			, #{longitude}
+			, TO_CHAR(sysdate, 'yyyy-MM-dd HH24:mi:ss')
+			, #{user_id}
+			, '0001'
+		)
 	</insert>
 </mapper>

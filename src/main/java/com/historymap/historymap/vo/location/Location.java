@@ -10,4 +10,5 @@ public class Location {
     String datetime;
     String user_id;
     String marker_id;
+    boolean save = true;
 }

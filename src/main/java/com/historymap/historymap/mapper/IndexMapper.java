@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IndexMapper {
     List<Location> getIndex(String user_id);
-    int insertList(Position position, String user_id);
+    int insertList(Location location);
 }
